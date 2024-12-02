@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+    "charactersListTitle": "Characters list",
+    "@charactersListTitle": {
+  "description": "Title for the characters list page"
+},
+    "createCharacterTitle": "Create a character",
+    "@createCharacterTitle": {},
+    "character": "Character",
+    "@character": {},
+    "newCharacter": "New character",
+    "@newCharacter": {},  
+    "pickImage": "Pick an image",
+    "@pickImage": {},
+    "submit": "Submit",
+    "@submit": {},
+    "noCharactersFound": "No characters found, please create a new one.",
+    "@noCharactersFound": {},
+    "errorOccurred": "An error occurred: {error}",
+    "@errorOccurred": {
+      "description": "Message displayed when an error happens.",
+      "placeholders": {
+        "error": {
+          "type": "String",
+          "example": "Network error"
+        }
+      }
+    }
+  }
