@@ -14,7 +14,7 @@ class CharacterViewModel extends _$CharacterViewModel {
   final Set<int> _fetchedPages = {}; // Track fetched pages
 
   @override
-  FutureOr<List<Character>> build() async {
+  Future<List<Character>> build() async {
     return allCharacters;
   }
 
@@ -29,10 +29,13 @@ class CharacterViewModel extends _$CharacterViewModel {
         return _currentSearchQuery.isNotEmpty
             ? filteredCharacters
             : allCharacters
-                .where((character) =>
-                    allCharacters.indexOf(character) >= (page - 1) * pageSize &&
-                    allCharacters.indexOf(character) < page * pageSize)
-                .toList();
+                  .where(
+                    (character) =>
+                        allCharacters.indexOf(character) >=
+                            (page - 1) * pageSize &&
+                        allCharacters.indexOf(character) < page * pageSize,
+                  )
+                  .toList();
       }
 
       final fetchCharactersUseCase = ref.read(fetchCharactersUseCaseProvider);

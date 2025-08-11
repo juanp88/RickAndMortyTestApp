@@ -15,8 +15,8 @@ class NewCharacterViewModel extends _$NewCharacterViewModel {
   List<Character> submittedCharacters = [];
 
   @override
-  FutureOr<void> build() {
-    fetchSubmittedCharacters();
+  Future<void> build() async {
+    await fetchSubmittedCharacters();
   }
 
   Future<String?> pickAndUploadImage() async {
@@ -34,8 +34,10 @@ class NewCharacterViewModel extends _$NewCharacterViewModel {
       );
 
       // Upload the image to S3
-      imageUrl =
-          await newCharacterUseCase.submitImage(uploadUrl, File(image.path));
+      imageUrl = await newCharacterUseCase.submitImage(
+        uploadUrl,
+        File(image.path),
+      );
 
       return imageUrl;
     } catch (error) {
@@ -82,8 +84,8 @@ class NewCharacterViewModel extends _$NewCharacterViewModel {
     state = const AsyncValue.loading(); // Set loading state
     try {
       final newCharacterUseCase = ref.read(newCharacterUsecasesProvider);
-      final fetchedCharacters =
-          await newCharacterUseCase.fetchSubmittedCharacters();
+      final fetchedCharacters = await newCharacterUseCase
+          .fetchSubmittedCharacters();
 
       submittedCharacters = fetchedCharacters; // Update the list of characters
       state = const AsyncValue.data(null); // Notify listeners of success

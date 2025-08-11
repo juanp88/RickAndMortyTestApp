@@ -1,11 +1,8 @@
-import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
-import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_and_morty_app/Core/utils/colors.dart';
 import 'characters_screen.dart';
 import 'new_character_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -25,32 +22,40 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<String> titles = [
-      AppLocalizations.of(context)?.charactersListTitle ?? "",
-      AppLocalizations.of(context)?.createCharacterTitle ?? "",
-      // S.of(context).createCharacterTitle, // Title for the New Character tab
+      AppLocalizations.of(context)?.charactersListTitle ?? "Characters",
+      AppLocalizations.of(context)?.createCharacterTitle ?? "Create Character",
     ];
+
+    final List<NavigationDestination> destinations = [
+      const NavigationDestination(
+        icon: Icon(Icons.people_outline),
+        selectedIcon: Icon(Icons.people),
+        label: 'Characters',
+      ),
+      const NavigationDestination(
+        icon: Icon(Icons.add_circle_outline),
+        selectedIcon: Icon(Icons.add_circle),
+        label: 'Create',
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(titles[_currentIndex]),
+        elevation: 0,
+        scrolledUnderElevation: 1,
       ),
-      body: _tabs[_currentIndex], // Display the screen based on the index
-      bottomNavigationBar: BottomBarInspiredOutside(
-        items: const [
-          TabItem(icon: Icons.home, title: 'Characters'),
-          TabItem(icon: Icons.favorite, title: 'New Character'),
-        ],
-        top: -28,
-        itemStyle: ItemStyle.circle,
-        chipStyle: const ChipStyle(background: AppColors.third),
-        backgroundColor: AppColors.third,
-        color: AppColors.primary,
-        colorSelected: AppColors.primary,
-        indexSelected: _currentIndex,
-        onTap: (int index) {
+      body: _tabs[_currentIndex],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (int index) {
           setState(() {
-            _currentIndex = index; // Change the screen based on selected tab
+            _currentIndex = index;
           });
         },
+        destinations: destinations,
+        elevation: 0,
+        height: 80,
       ),
     );
   }
